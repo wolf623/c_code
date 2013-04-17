@@ -6,5 +6,7 @@ int main(int argc, char *argv[])
 {
 	printf("Hello GitHub\n");
 	
+	printf("Hello World\n");
+	
 	return 0;
 }
