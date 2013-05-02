@@ -33,6 +33,18 @@ void err_quit(const char *fmt, ...)
 	return;
 }
 
+void err_msg(const char *fmt, ...)
+{
+	va_list ap;
+	
+	va_start(ap, fmt);
+	err_doit(0, LOG_INFO, fmt, ap);
+	va_end(ap);
+
+	return;
+}
+
+
 static void err_doit(int errnoflag, int level, const char *fmt, va_list ap)
 {
 	int errno_save, len;
@@ -68,15 +80,4 @@ static void err_doit(int errnoflag, int level, const char *fmt, va_list ap)
 	
 	return;
 }
-
-#ifdef TEST
-int main(int argc, char *argv[])
-{
-	//err_sys("Hello Wolf");
-	err_quit("Hello Wolf");
-
-	return 0;
-}
-#endif
-
 
