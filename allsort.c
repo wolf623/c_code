@@ -2,12 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-void shellsort(int array[],int n);
+void shell_sort(int *array,int n);
 
-void BubbleSort(int array[], int num);
+void bubble_sort(int *array, int num);
 
-int SelectSort(int array[], int len);
+void select_sort(int *array, int len);
 
+void insert_sort1(int *array, int num);
+
+void insert_sort2(int *array, int num);
+
+void quick_sort(int *array, int low, int high);
 
 int main()
 {
@@ -26,10 +31,13 @@ int main()
 		
 	printf("\n");
 	
-  	//shellsort(array,num);
-  	//BubbleSort(array, num);
-  	SelectSort(brray,num);
-  
+  	//shell_sort(array,num);
+  	//bubble_sort(array, num);
+  	//select_sort(brray,num);
+  	//insert_sort1(brray, num);
+	//insert_sort2(brray, num);
+	quick_sort(brray, 0, num-1);
+
 	printf("After: num = %d\n",num);
 	
 	for(i=0; i<num; i++)
@@ -41,7 +49,7 @@ int main()
 }
 
 
-void BubbleSort(int array[], int num)
+void bubble_sort(int *array, int num)
 {
 	int i, j, temp, flag;
 	for(i=0; i<num; i++)
@@ -66,7 +74,7 @@ void BubbleSort(int array[], int num)
 
 
 
-void shellsort(int array[],int n)
+void shell_sort(int *array,int n)
 {
 	int i, j, k, temp;
 	
@@ -86,7 +94,7 @@ void shellsort(int array[],int n)
 }
 
 
-int SelectSort(int array[], int len)
+void select_sort(int *array, int len)
 {
 	int i, j, temp;
 	for(i=0; i<len-1; i++)
@@ -101,6 +109,91 @@ int SelectSort(int array[], int len)
 			}
 		}
 	}
+}
 
-	return 0;
+void insert_sort1(int *array, int num)
+{
+	int i, j, temp;
+
+	for(i=1; i<num; i++)
+	{
+		temp = array[i];
+		j = i;
+		
+		//while((j > 0) && (array[j-1] < temp))
+		while((j > 0) && (array[j-1] > temp))
+		{
+			array[j] = array[j-1];
+			--j;
+		}
+
+		array[j] = temp; //array[0] = temp
+	}
+}
+
+void insert_sort2(int *array, int num)
+{
+	int i, j, low, high, mid;
+	int temp;
+
+	for(i=1; i<num; i++)
+	{
+		temp = array[i];
+
+		low = 0;
+		high = i - 1;
+
+		while(low <= high)
+		{
+			mid = (low + high) / 2;
+			if(temp < array[mid])
+				high = mid - 1;
+			else
+				low = mid + 1;
+		}
+
+		for(j = i-1; j >= high+1; --j)
+		{
+			array[j+1] = array[j];
+		}
+
+		array[high+1] = temp;
+	}
+}
+
+int partition(int *array, int low, int high)
+{
+	int mid = array[low];
+	
+	while(low < high)
+	{
+		while((low < high) && (array[high] >= mid))
+		{
+			--high;
+		}
+
+		array[low] = array[high];
+
+		while((low < high) && (array[low] < mid))
+		{
+			++low;
+		}
+
+		array[high] = array[low];
+	}
+
+	array[low] = mid;
+
+	return low;
+}
+
+void quick_sort(int *array, int low, int high)
+{
+	int mid;
+	if(low < high)
+	{
+		mid = partition(array, low, high);
+		quick_sort(array, low, mid-1);
+		quick_sort(array, mid+1, high);
+	}
 }
