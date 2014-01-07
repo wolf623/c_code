@@ -99,7 +99,11 @@ int main(int argc, char *argv[])
 	printf("ip address(inet_ntop): %s\n", ipv4_txt);
 #endif
 	
-	get_interface_ip_address("eth0");
+	//get_interface_ip_address("eth0");
+	printf("smm6 ip: %u.%u.%u.%u\n", IP_ADDRESS(0x7f000001));
+	printf("smm7 ip: %u.%u.%u.%u\n", IP_ADDRESS(0x7f010108));
+	printf("slot1 ip: %u.%u.%u.%u\n", IP_ADDRESS(0x7f010002));
+	printf("slot11 ip: %u.%u.%u.%u\n", IP_ADDRESS(0x7f01000c));
 
 	return 0;
 }

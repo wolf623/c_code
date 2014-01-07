@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 char *timeval_to_tm(struct timeval *tv, char *timestamp)
 {
@@ -26,16 +27,24 @@ char *timeval_to_tm(struct timeval *tv, char *timestamp)
 
 int main(void)
 {
-	struct timeval tv;
+	struct timeval tv = {0};
 	gettimeofday(&tv, NULL);
 	static char buff[64] = {0};
+	static char new_buff[64] = {0};
+	struct timeval new_tv = {0};
+	memcpy(&new_tv, &tv, sizeof(struct timeval));
 
 	if(timeval_to_tm(&tv, buff) != NULL)
 	{
 		printf("timeval_to_tm() success.\n");
+		printf("%s\n", buff);
 	}
 	
-	printf("%s\n", buff);
+	if(timeval_to_tm(&new_tv, new_buff) != NULL)
+	{
+		printf("new timeval_to_tm() success.\n");
+		printf("new: %s\n", new_buff);
+	}
 
 	exit(0);
 }
