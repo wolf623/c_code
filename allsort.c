@@ -2,17 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 
-void shell_sort(int *array,int n);
+void shell_sort1(int *array,int n);
+void shell_sort2(int *array,int n);
 
 void bubble_sort(int *array, int num);
 
 void select_sort(int *array, int len);
 
 void insert_sort1(int *array, int num);
-
 void insert_sort2(int *array, int num);
 
-void quick_sort(int *array, int low, int high);
+void quick_sort1(int *array, int num);
+void quick_sort2(int *array, int num);
+
+void merge_sort(int *array, int num);
 
 int main()
 {
@@ -31,12 +34,15 @@ int main()
 		
 	printf("\n");
 	
-  	//shell_sort(array,num);
+  	//shell_sort1(brray,num);
+	//shell_sort2(brray, num);
   	//bubble_sort(array, num);
   	//select_sort(brray,num);
   	//insert_sort1(brray, num);
 	//insert_sort2(brray, num);
-	quick_sort(brray, 0, num-1);
+	//quick_sort1(brray, num);
+	quick_sort2(brray, num);
+	//merge_sort(brray, num);
 
 	printf("After: num = %d\n",num);
 	
@@ -74,7 +80,7 @@ void bubble_sort(int *array, int num)
 
 
 
-void shell_sort(int *array,int n)
+void shell_sort1(int *array,int n)
 {
 	int i, j, k, temp;
 	
@@ -91,6 +97,27 @@ void shell_sort(int *array,int n)
 			array[j] = temp;
 		}
 		
+}
+
+//other wrinting for shell sort
+void shell_sort2(int *a, int n)
+{
+	int d = n;
+	int temp;
+	int i;
+	while(d > 1)
+	{
+		d = (d + 1) / 2;
+		for(i=0; i<n-d; i++)
+		{
+			if(a[i] > a[i+d])
+			{
+				temp = a[i];
+				a[i] = a[i+d];
+				a[i+d] = temp;
+			}
+		}
+	}
 }
 
 
@@ -161,7 +188,8 @@ void insert_sort2(int *array, int num)
 	}
 }
 
-int partition(int *array, int low, int high)
+/* quick_sort1() */ 
+int partition1(int *array, int low, int high)
 {
 	int mid = array[low];
 	
@@ -187,13 +215,127 @@ int partition(int *array, int low, int high)
 	return low;
 }
 
-void quick_sort(int *array, int low, int high)
+void _quick_sort(int *array, int low, int high)
 {
 	int mid;
 	if(low < high)
 	{
-		mid = partition(array, low, high);
-		quick_sort(array, low, mid-1);
-		quick_sort(array, mid+1, high);
+		mid = partition1(array, low, high);
+		_quick_sort(array, low, mid-1);
+		_quick_sort(array, mid+1, high);
 	}
 }
+
+void quick_sort1(int *array, int num)
+{
+	_quick_sort(array, 0, num-1);
+}
+/* end of quick_sort1() */
+
+/*start of quick_sort2() */
+void swap(int *a, int *b)
+{
+	int temp;
+	temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+int partition2(int a[], int p, int r)
+{
+	int i = p;
+	int j = r + 1;
+	int x = a[p];
+	while(1)
+	{
+		while(a[++i]<x && i<r);
+		while(a[--j] > x);
+		if(i >= j)
+			break;
+		swap(&a[j], &a[i]);
+	}
+
+	a[p] = a[i];
+	a[j] = x;
+	return j;
+}
+
+void _quick_sort2(int a[], int p, int r)
+{
+	if(p < r)
+	{
+		int q = partition2(a, p, r);
+		_quick_sort2(a, p, q-1);
+		_quick_sort2(a, q+1, r);
+	}
+}
+
+//something is wrong, how to call the _quick_sort2() func????
+void quick_sort2(int a[], int num)
+{
+	_quick_sort2(a, 0, num-1);
+}
+/* end of quick_sort2() */
+
+/* merge_sort() */
+void mergearray(int *array, int first, int last)
+{
+	int i, j, k, mid, l;
+	int *temp;
+
+	temp = (int *)malloc(sizeof(int) * (last + 1));
+	if(temp == NULL)
+	{
+		printf("malloc error\n");
+		return;
+	}
+
+	i = first;
+	mid = (first + last) / 2;
+	j = mid + 1;
+	l = last;
+	k = 0;
+
+	while(i <= mid && j <= l)
+	{
+		if(array[i] <= array[j])
+			temp[k++] = array[i++];
+		else
+			temp[k++] = array[j++];
+	}
+
+	while(i <= mid)
+		temp[k++] = array[i++];
+	
+	while(j <= l)
+		temp[k++] = array[j++];
+
+	for(i=0; i<k; i++)
+		array[first+i] = temp[i];
+
+	free(temp);
+}
+
+void _merge_sort(int *array, int first, int last)
+{
+	if(first < last)
+	{
+		int mid = (first + last) / 2;
+		_merge_sort(array, first, mid);
+		_merge_sort(array, mid+1, last);
+		mergearray(array, first, last);
+	}
+}
+
+void merge_sort(int *array, int num)
+{
+	int *temp = (int *)malloc(sizeof(int) * num);
+	if(temp == NULL)
+		printf("malloc error\n");
+
+	_merge_sort(array, 0, num-1);
+
+	free(temp);
+}
+/* end of merge_sort() */
+

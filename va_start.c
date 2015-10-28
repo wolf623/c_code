@@ -17,7 +17,7 @@ void printlog(FILE *fp, const char *text, ...)
 
 int main(int argc, char *argv[])
 {
-	printlog(stdout, "wolf%d", 623);
+	printlog(stdout, "wolf%d%s", 623, "abc");
 
 	return 0;
 }

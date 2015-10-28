@@ -78,6 +78,17 @@ int main(int argc, char *argv[])
 
 	printf("Now time is: %s\n", ctime(&mytime));
 	printf("time is: %s\n", asctime(mytm));
+	printf("localtime: %02d/%02d/%04d,%02d:%02d:%02d\n", 
+				mytm->tm_mday, mytm->tm_mon + 1, mytm->tm_year + 1900,
+				mytm->tm_hour,  mytm->tm_min,  mytm->tm_sec);
+
+	
+	//include the UTC timezero
+	struct tm *datetime;
+	datetime= gmtime(&mytime);
+	printf("gmtime: %02d/%02d/%04d,%02d:%02d:%02d\n", 
+				datetime->tm_mday, datetime->tm_mon + 1, datetime->tm_year + 1900,
+				datetime->tm_hour,  datetime->tm_min,  datetime->tm_sec);
 
 	exit(0);
 

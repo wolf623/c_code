@@ -104,6 +104,18 @@ int main(int argc, char *argv[])
 	printf("smm7 ip: %u.%u.%u.%u\n", IP_ADDRESS(0x7f010108));
 	printf("slot1 ip: %u.%u.%u.%u\n", IP_ADDRESS(0x7f010002));
 	printf("slot11 ip: %u.%u.%u.%u\n", IP_ADDRESS(0x7f01000c));
+	printf("ip?: %u.%u.%u.%u\n", IP_ADDRESS(0xf0000000));
+	printf("ip??: %u.%u.%u.%u\n", IP_ADDRESS(0xe0000000));
+
+	char addr[23] = {0};
+	struct in_addr inaddr;
+	inaddr.s_addr = 0xe0000000;
+	char *paddr = inet_ntoa(inaddr);
+	strcpy(addr, paddr);
+	printf("??: %s\n", addr);
+
+
+
 
 	return 0;
 }
