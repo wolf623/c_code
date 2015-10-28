@@ -1,4 +1,0 @@
-hello abc
-hello wolf
-hello abc
-hello wolf
