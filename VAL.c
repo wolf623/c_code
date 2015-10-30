@@ -1,25 +1,10 @@
-/*
- * =====================================================================================
- *
- *       Filename:  VAL.c
- *
- *    Description:  
- *
- *        Version:  1.0
- *        Created:  01/07/15 17:34:53
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  YOUR NAME (), 
- *   Organization:  
- *
- * =====================================================================================
- */
+/* VAL16 is get the 16bit of number */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+//return max value: (2^32-1)/2
 int VAL32(const void *_x)
 {
 	int y;
@@ -37,6 +22,7 @@ int VAL32(const void *_x)
 	return y;
 }
 
+//return max value: 2^16
 int VAL16(const void *_x)
 {
 	int y;
@@ -56,8 +42,10 @@ int VAL16(const void *_x)
 
 int main(int argc, char *argv[])
 {
-	int abc = 32;
-	printf("val32: %d\n", VAL16((char *)&abc));	
+	int abc = 65535;
+	long long int def = 4294967295/2+1;
+	printf("val16: %d\n", VAL16((char *)&abc));	
+	printf("val32: %d\n", VAL32((char *)&def));	
 
 	return 0;
 }

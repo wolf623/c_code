@@ -25,11 +25,9 @@ char *mystrstr(const char *str1, const char *str2)
 
 int strstr_next(const char *str1, const char *str2, int next, int *num, char **ptr)
 {
-	int number = 0;
 	int len = strlen(str2);
 	if(len == 0)
 	{
-		fprintf(stderr, "%s():The second string should not be NULL\n", __FUNCTION__);
 		return -1;
 	}
 	
@@ -38,26 +36,25 @@ int strstr_next(const char *str1, const char *str2, int next, int *num, char **p
 		if(*str1 == *str2 &&
 			strncmp(str1, str2, len) == 0)
 		{
-			if(next == 0) //find at least one
+			if(next != 1) //find at least one
 			{
-				number = 1;
-				*num = number;
+				*num = 1;
 				*ptr = (char *)str1;
 				return 0;
 			}
 			
 			*ptr++ = (char *)str1;
-			number++;	//find next, and increate the num
+			(*num)++;	//find next, and increate the num
 		}
 	}
 	
-	if(number == 0)
+	if(*num == 0)
 	{
 		printf("Find none, return NULL\n");
 		return 0;
 	}
 
-	return 0;
+	return *num;
 }
 
 int main(int argc,char *argv[])
@@ -69,11 +66,17 @@ int main(int argc,char *argv[])
 	char **ptr = (char **)buff;
 	if((str = mystrstr("Hello Wolf Wolf", "Wolf")) != NULL)
 	{
-		printf("Find it\n");
 		printf("%s\n", str);
 	}
 
-	if((strstr_next("Hello Wolf Hello Wolf", "Wolf", 0, &num, ptr)) != -1)
+	#if 0
+	if((str = strstr("Hello wolf wolf", "wolf")) != NULL)
+	{
+		printf("%s\n", str);
+	}
+	#endif
+	
+	if((strstr_next("Hello Wolf Wolf Hello Wolf", "Wolf", 1, &num, ptr)) != -1)
 	{
 		printf("Find %d numbers\n", num);
 
@@ -83,4 +86,6 @@ int main(int argc,char *argv[])
 	
 	return 0;
 }
+
+
 
