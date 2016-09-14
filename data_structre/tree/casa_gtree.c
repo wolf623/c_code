@@ -1,3 +1,16 @@
+/**
+ * filename: casa_gtree.c
+ * desc: routines extended to gtree.c in glib-1.2
+ * author: Luo Zhi Biao
+ * create:		2006-02-24
+ * modify history:
+ * 
+ *   1. 2011-01-30 Yongting Lin.
+ *     name this module as casa_gtree and make it thread safe.
+ *
+ * function prefix: casa_g_tree_
+ **/
+
 /* 
  * MT safe
  */
