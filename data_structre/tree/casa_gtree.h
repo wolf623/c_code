@@ -1,8 +1,3 @@
- /**
-   * add method to lookup next node for specific key
-   * Feb 24, 2006, Luo Zhibiao
-   **/
-
 #ifndef __CASA_G_TREE_H__
 #define __CASA_G_TREE_H__
 
